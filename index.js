@@ -28,6 +28,9 @@ const repeatCount = 1000;
 
 
     const currentURL = page.url();
+
+    // no clue why this gets split or added
+    // dont really do anything with it
     const urlParams = new URLSearchParams(currentURL.split('?')[1]);
     const cfid = urlParams.get('cfid');
     const uk = urlParams.get('uk');
@@ -50,8 +53,6 @@ const repeatCount = 1000;
     await page.waitForResponse((response) => response.url().includes('/v1.cfm') && response.status() === 200);
 
     await page.waitForSelector('p', { timeout: 120000 });  
-
-    const finalUrl = page.url(); 
 
     const _ = await page.content();
 
