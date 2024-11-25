@@ -53,8 +53,6 @@ const REPEAT_COUNT = 1000;
     await page.waitForSelector('p', { timeout: 120000 });  
 
     const _ = await page.content();
-
-    console.log('Quiz succesvol verzonden!');
   }
 
   for (let i = 0; i < REPEAT_COUNT; i++) {
