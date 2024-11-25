@@ -49,6 +49,8 @@ const puppeteer = require('puppeteer');
 
     await page.waitForSelector('p', { timeout: 120000 });  
 
+    // no clue if content needs to be checked
+    // depends if it's one of those devs that send a 200 ok but its still an error
     const content = await page.content();
 
     const res = content.includes('<p>Bedankt!</p>') ? 'SUCCES' : 'FAILED';
