@@ -1,7 +1,5 @@
 const puppeteer = require('puppeteer');
 
-const REPEAT_COUNT = 1000; 
-
 (async () => {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
@@ -13,7 +11,6 @@ const REPEAT_COUNT = 1000;
     const { first } = data.results[0].name; 
     return `${first}`; 
   }
-
 
   async function submitQuiz() {
     const url = 'https://interactief.ketnet.be/20/v1.cfm?id=AB56452B-80C7-4DBC-81B9-802D7A289DF1';
@@ -52,14 +49,29 @@ const REPEAT_COUNT = 1000;
 
     await page.waitForSelector('p', { timeout: 120000 });  
 
-    const _ = await page.content();
+    // no clue if content needs to be checked
+    // depends if it's one of those devs that send a 200 ok but its still an error
+    const content = await page.content();
+
+    const res = content.includes('<p>Bedankt!</p>') ? 'SUCCES' : 'FAILED';
+
+    console.log('ATTEMPT: ' + res);
   }
 
-  for (let i = 0; i < REPEAT_COUNT; i++) {
-    console.log(`Verstuur poging ${i + 1} van ${REPEAT_COUNT}`);
+  function cleanup() {
+    console.log("Cleaning up resources...");
+    if (browser)
+      browser.close().catch((err) => console.error("Error closing browser:", err));
+
+    process.exit();
+  }
+
+  process.on("SIGINT", cleanup);
+  process.on("SIGTERM", cleanup);
+  process.on("exit", cleanup);
+
+  for (let i = 0;; i++) {
+    console.log(`ATTEMPT: ${i + 1}`);
     await submitQuiz();
-    console.log(`Poging ${i + 1} voltooid!`);
   }
-
-  await browser.close();
 })();
