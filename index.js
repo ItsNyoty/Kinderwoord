@@ -52,15 +52,16 @@ const REPEAT_COUNT = 1000;
 
     await page.waitForSelector('p', { timeout: 120000 });  
 
-    const _ = await page.content();
+    const content = await page.content();
 
-    console.log('Quiz succesvol verzonden!');
+    const res = content.includes('<p>Bedankt!</p>') ? 'SUCCES' : 'FAILED';
+
+    console.log('ATTEMPT: ' + res);
   }
 
   for (let i = 0; i < REPEAT_COUNT; i++) {
-    console.log(`Verstuur poging ${i + 1} van ${REPEAT_COUNT}`);
+    console.log(`ATTEMPT: ${i + 1}`);
     await submitQuiz();
-    console.log(`Poging ${i + 1} voltooid!`);
   }
 
   await browser.close();
