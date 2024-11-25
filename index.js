@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-const repeatCount = 1000; 
+const REPEAT_COUNT = 1000; 
 
 (async () => {
   const browser = await puppeteer.launch({ headless: true });
@@ -58,8 +58,8 @@ const repeatCount = 1000;
     console.log('Quiz succesvol verzonden!');
   }
 
-  for (let i = 0; i < repeatCount; i++) {
-    console.log(`Verstuur poging ${i + 1} van ${repeatCount}`);
+  for (let i = 0; i < REPEAT_COUNT; i++) {
+    console.log(`Verstuur poging ${i + 1} van ${REPEAT_COUNT}`);
     await submitQuiz();
     console.log(`Poging ${i + 1} voltooid!`);
   }
