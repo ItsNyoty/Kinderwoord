@@ -25,7 +25,6 @@ const REPEAT_COUNT = 1000;
 
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
-
     const currentURL = page.url();
 
     // no clue why this gets split or added
