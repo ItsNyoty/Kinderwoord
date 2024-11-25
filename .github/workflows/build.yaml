@@ -1,0 +1,47 @@
+name: Build and test
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v1
+
+      - name: install node js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: yarn install
+      - name: linting
+        run: yarn lint
+
+
+
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out repository code
+        uses: actions/checkout@v1
+
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+
+      -
+        name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: False
+          platforms: linux/amd64,linux/arm64
+          
